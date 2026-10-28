@@ -1,0 +1,25 @@
+# 由 scripts/publish_public_repo.sh 生成：防止发布产物被误 commit 进历史。
+# deb 与校验和属于 Release 附件（对象存储），不属于 git。
+/dist/
+*.deb
+*.deb.sha256
+*.sha256
+SHA256SUMS
+build-info-*.json
+release-*.json
+# 密钥与授权产物：公开仓里出现即为事故
+*.pem
+*.key
+*.crt
+aegis-keys/
+aegis-licenses/
+license.dat
+license-*.dat
+machine.json
+machine_info.json
+users.json
+# 本脚本的本地记号（不入库：别让公开仓暴露内部工具名）
+.aethel-publish
+# 杂项
+.DS_Store
+*.log

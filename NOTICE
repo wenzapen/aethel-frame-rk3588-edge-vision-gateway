@@ -1,0 +1,74 @@
+AegisEdge-RK
+Copyright 2026 AegisEdge-RK contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+It includes the third-party components and assets listed below. Each entry keeps
+its own license; the Apache-2.0 grant above does not override them.
+
+================================================================================
+1. Vendored source (compiled in, sources under backend/third_party/)
+================================================================================
+
+  pugixml            MIT                 backend/third_party/pugixml/LICENSE.md
+  spdlog             MIT                 backend/third_party/spdlog/LICENSE
+  Crow               BSD-3-Clause        backend/third_party/crow/LICENSE
+  standalone Asio    Boost-1.0 (BSL-1.0) backend/third_party/asio/LICENSE_1_0.txt
+  nlohmann/json      MIT                 backend/third_party/nlohmann/LICENSE.MIT
+
+  These are permissive licenses: attribution, license text and warranty
+  disclaimer must be retained. Modified files (if any) are documented in
+  backend/third_party/README.md.
+
+================================================================================
+2. Dynamically linked components (NOT bundled as source; shipped via apt/deb)
+================================================================================
+
+  GStreamer 1.x        LGPL-2.1-or-later   system package (dynamic)
+  gst-plugins-base     LGPL-2.1-or-later   system package (dynamic)
+  librockchip_mpp      Apache-2.0          system package (dynamic)
+  librga (RGA)         Apache-2.0          system package (dynamic)
+  librknnrt (RKNPU2)   BSD-3-Clause        system package (dynamic)
+  OpenSSL (libssl)     Apache-2.0          system package (dynamic)
+  mediamtx             MIT                 packaged binary, /opt/aethel-frame/bin
+  gstmpp (media base)  LGPL-2.1-or-later   packaged plugins, /opt/aethel-frame/lib
+                       (dynamically linked; full corresponding source of gstmpp
+                        is available from the vendor on request — LGPL §6)
+
+  LGPL obligations are met by dynamic linking: the libraries stay replaceable
+  by the user (no static linking, no obfuscation of the interface).
+
+================================================================================
+3. Model weights
+================================================================================
+
+  deploy/models/builtin/yolox_s_coco.rknn
+      Apache-2.0  — Megvii-BaseDetection YOLOX (yolox-s), converted with
+      airockchip/rknn_model_zoo. Redistributable; may be shipped in the deb.
+
+  deploy/models/agpl/*
+      AGPL-3.0-only — NOT redistributable, NOT included in any package.
+      Kept for local comparison only (see deploy/models/agpl/README.md).
+
+  Customer-supplied models (BYOM) are imported at runtime under the license the
+  customer declares in the model descriptor; they are never redistributed by us.
+
+================================================================================
+4. Frontend runtime dependencies (bundled into frontend/dist/)
+================================================================================
+
+  Vue 3, Pinia, Vue Router, Vite (build only), Tailwind CSS (build only) and their
+  transitive dependencies are MIT / Apache-2.0 / ISC. Copyright notices are kept
+  in the generated bundle and in the package's copyright file.
+
+================================================================================
+5. Notes
+================================================================================
+
+  * Trademarks (e.g. "Rockchip", "RK3588") belong to their owners and are used only
+    for descriptive/compatibility purposes. Product-facing UI text avoids vendor
+    and chip names by design.
+  * The Apache-2.0 appendix notice in LICENSE applies to this work as a whole.
+  * Full compliance matrix and review checklist: docs/compliance.md in the release
+    repository (shipped to customers alongside the install guide and user manual).
+  * Report a licensing issue: mail 3300934581@qq.com and include the version printed
+    by "aethel-frame --version".
