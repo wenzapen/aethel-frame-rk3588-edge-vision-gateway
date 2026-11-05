@@ -80,3 +80,6 @@ sudo loginctl enable-linger "$(id -un)"
 
 授权购买、容量评估、现场部署支持：**3300934581@qq.com**（请附上设备短码 `AEGIS-XXXX-XXXX-XXXX`，
 获取方式见 [授权说明](docs/licensing.md)）。
+- **微信**：扫码添加（工作日 9:00–18:00 通常 2 小时内回复；邮箱 24 小时内回复）
+
+<img src="docs/assets/wechat-qr.png" alt="微信二维码" width="180">
