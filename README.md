@@ -4,11 +4,11 @@
 > NPU 目标检测/行为分析 → 画框叠加 → 告警与录像 → 浏览器控制台。**单机自包含**，不需要云、不需要数据库服务器。
 
 本仓库是**发布仓库**：只放交付文档、许可与声明文件；安装包（`.deb`）挂在 **Releases** 页，不进 git。
-所有文档都是仓库里的普通 `.md` 文件，**点开就能在网页上读，不需要下载**。
+所有文档都是仓库里的普通 `.md` 文件，**在浏览器中直接阅读，无需下载**。
 
 ---
 
-## 三分钟跑起来
+## 快速部署
 
 ```bash
 # 1) 到 Releases 页下载最新版的安装包与校验文件
@@ -17,9 +17,17 @@
 # 2) 校验（必须 OK 再装）
 sha256sum -c aethel-frame_<版本>_arm64.deb.sha256
 
-# 3) 安装并启动
+# 3) 安装只读材料到系统（这一步需要一次 sudo）
 sudo apt install ./aethel-frame_<版本>_arm64.deb
-sudo systemctl start aethel-frame
+
+# 4) 安装到您的用户目录（**不要加 sudo**，默认装进 ~/aethel-frame）
+aethel-frame-setup
+
+# 5) 启动（用户级服务，日常不需要 sudo）
+systemctl --user start aethel-frame
+
+# 需要开机自启（无人值守重启后自己起来）才做，一次性：
+sudo loginctl enable-linger "$(id -un)"
 ```
 
 浏览器打开 `https://<设备IP>:8443`，用初始账号 **`admin` / `Aegis@12345`** 登录（首次登录会强制改密）。
@@ -33,9 +41,9 @@ sudo systemctl start aethel-frame
 
 | 文档 | 解决什么 |
 |---|---|
-| [安装指南](docs/install-guide.md) | 操作系统与板厂 SDK 要求、依赖、安装/升级/卸载/回滚、端口、日志位置、便携（无 root）安装 |
+| [安装指南](docs/install-guide.md) | 操作系统与板厂 SDK 要求、依赖、安装 deb 包/升级/卸载/回滚、端口、日志位置 |
 | [用户手册](docs/user-guide.md) | 控制台怎么用：加摄像机、监视墙翻页、AI 分析与检测目标、告警与取证、录像与回放、模型中心、系统页、外部集成 |
-| [授权说明](docs/licensing.md) | **不装 license 能跑几路**（免费 2 路）、怎么买更多路数、设备码怎么取、license 怎么导入、到期与降级规则 |
+| [授权说明](docs/licensing.md) | **不装 license 能跑几路**（免费 2 路）、怎么购买更多路数、机器信息怎么取、license 怎么上传、到期与降级规则 |
 | [合规声明](docs/compliance.md) | 开源组件许可矩阵与 LGPL 义务履行方式；**内置模型是 Apache-2.0 的 YOLOX**；自带模型（YOLO 系列）的规则 |
 | 更新记录 | 每个版本改了什么：正文在仓库根目录的 `CHANGELOG.md`，同时也挂在 Releases 正文里 |
 | 许可与声明 | 仓库根目录的 `LICENSE`（Apache-2.0）与 `NOTICE`（第三方组件清单） |
@@ -49,12 +57,12 @@ sudo systemctl start aethel-frame
 | 项 | 说明 |
 |---|---|
 | 视频接入 | RTSP / ONVIF（含一键搜索取流）/ 本地文件；主 + 子双码流 |
-| 解码 / 编码 | RK3588 硬件 VPU（`mppvideodec` / `h264_rkmpp`），不占 CPU |
+| 解码 / 编码 | RK3588 硬件 VPU 编解码（H.264 / H.265），不经 CPU 软件编解码 |
 | AI 推理 | RKNPU2（3 核），内置 **YOLOX-S COCO**（80 类，Apache-2.0）；支持客户自带 YOLO 系列模型 |
-| 业务分析 | 目标检测 + 跟踪 + 越线/区域等行为规则，类别可按业务勾选 |
+| 业务分析 | 目标检测 + 跟踪 + 越线/区域等行为规则，类别可按业务勾选；支持 **AI 模板**（保存 / 加载 / 批量下发）复用配置 |
 | 输出 | 浏览器 WebRTC（WHEP）预览、子码流转发、告警图片与短视频取证、MP4 录像 |
 | 集成 | REST + WebSocket 事件、MQTT / HTTP 外部推送 |
-| 授权 | 免费 **2 路**；付费按 **4 / 8 / 12** 路档位（离线签名 license，不依赖云端激活） |
+| 授权 | 免费 **2 路**；更多路数由离线签名授权文件按购买数量签发（不依赖云端激活），详见[授权说明](docs/licensing.md) |
 | 控制台 | HTTPS 8443，账号分级，支持中英界面 |
 
 实测容量参考（RK3588 8 核 / 16 GB，AI + 录像 + 预览全开）：8 路约占 2.2 核、12 路约占 3.7–4.0 核，
@@ -65,8 +73,8 @@ sudo systemctl start aethel-frame
 ## 安全与部署建议
 
 - **8443 只放内网**。这是设备控制台，不建议直接暴露公网；需要远程访问请走 VPN 或反向代理并加认证。
-- 首次登录后**立即修改默认口令**；`/etc/aethel-frame/` 下的账号库与证书请妥善保管。
-- 录像目录与系统盘分开（默认 `/data/aegis/recordings`），并按留存天数配置清理。
+- 首次登录后**立即修改默认口令**；安装根下的 `etc/` 目录（默认 `~/aethel-frame/etc/`，含账号库与证书私钥）请妥善保管。
+- 录像目录与系统盘分开（默认 `~/aethel-frame/data/recordings`），并按留存天数配置清理。
 
 ## 联系与反馈
 
