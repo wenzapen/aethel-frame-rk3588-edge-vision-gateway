@@ -15,7 +15,7 @@
 | Rockchip MPP | **1.5.0**（`librockchip_mpp.so.0`） | `dpkg -l \| grep mpp` |
 | librga | **2.2.0**（`librga.so.2`） | `ls -l /usr/lib/aarch64-linux-gnu/librga.so*` |
 | RKNPU 运行时 | **librknnrt 2.3.2** | `ls -l /usr/local/lib/librknnrt.so` |
-| 硬件媒体基座 | 随板厂镜像或交付包安装（安装脚本会自动体检） | `ls /usr/lib/aarch64-linux-gnu/librockchip_mpp.so*` |
+| 硬件媒体基座 | 随板厂镜像安装内核驱动与运行时库；**媒体处理插件（含码流分支与模型后处理组件）全部随交付包携带**，目标机无需另行安装（安装脚本会自动体检） | `ls /usr/lib/aarch64-linux-gnu/librockchip_mpp.so*` |
 | mediamtx | **v1.13.1**（部分交付包已内置，见发布说明） | `mediamtx --version` |
 | mosquitto | 2.x（仅 MQTT 出口需要） | `mosquitto -h \| head -1` |
 | 磁盘 | 系统盘 ≥ 4 GB 可用；**录像盘单独分区**（默认在您家目录的 `~/aethel-frame/data`；要挂大盘请改配置项 `record.path`） | `df -h "$HOME"` |

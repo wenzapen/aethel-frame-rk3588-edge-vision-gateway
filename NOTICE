@@ -33,6 +33,9 @@ its own license; the Apache-2.0 grant above does not override them.
   gstmpp (media base)  LGPL-2.1-or-later   packaged plugins, /opt/aethel-frame/lib
                        (dynamically linked; full corresponding source of gstmpp
                         is available from the vendor on request — LGPL §6)
+  interpipe (RidgeRun) LGPL-2.1-or-later   packaged plugins, /opt/aethel-frame/lib
+                       (upstream: https://github.com/RidgeRun/gst-interpipe;
+                        corresponding source available on request — LGPL §6)
 
   LGPL obligations are met by dynamic linking: the libraries stay replaceable
   by the user (no static linking, no obfuscation of the interface).

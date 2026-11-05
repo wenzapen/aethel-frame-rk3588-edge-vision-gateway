@@ -33,7 +33,7 @@
 |---|---|---|
 | GStreamer core / base / good / bad | LGPL-2.1-or-later | 系统包（apt） |
 | **gstmpp**（媒体与推理基座插件） | **LGPL-2.1-or-later** | 交付包内的 `.so`，可替换 |
-| interpipe 插件族（RidgeRun，1.1.10，码流分支传输） | LGPL-2.1 | 运行环境手工安装（非 apt），可替换 |
+| interpipe 插件族（RidgeRun，1.1.10，码流分支传输） | LGPL-2.1 | 交付包内的 `.so`，可替换 |
 | OpenCV（core/imgproc/imgcodecs 等） | Apache-2.0 | 系统包 |
 | Rockchip MPP | Apache-2.0（含部分 MIT 文件） | 板厂镜像 / 板厂 `.deb` |
 | Rockchip librga | Apache-2.0 | 板厂镜像 |
